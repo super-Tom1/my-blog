@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/content.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./js/axios.js"></script>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <a class="title">个人博客|技术博客</a>
+            <ul class="menu">
+                <li><a href="./index.html">首页</a></li>
+                <li><a href="./sitemap.html">地图</a></li>
+                <li><a href="./about.html">关于</a></li>
+                <li><a href="./guestbook.html">留言</a></li>
+                <li><a href="./edit_blog.html">编辑博客</a></li>
+                <li><a href="./edit_every_day.html">编辑每日一句</a></li>
+            </ul>
+            <div class="search_bar">
+                <input type="text" placeholder="输入关键词">
+                <button>搜索</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体 -->
+    <div class="content">
+        <div class="content_left">
+            <div class="every_day" id="every_day">
+                <span class="everyDayTitle">每日一句</span>
+                <p v-html="getContent"></p>
+            </div>
+
+            <div class="article_list" id="article_list">
+                <div class="article" v-for="article in articleList">
+                    <a :href="article.link" class="article_title">{{article.title}}</a>
+                    <p class="article_content">{{article.content}}</p>
+                    <div class="article_foot">发布于{{article.date}}|浏览{{article.views}}|Tags:{{article.tags}}</div>
+                </div>
+                <div class="page_tool">
+                    <ul>
+                        <li 
+                        v-for="item in pageNumList" 
+                        v-bind:class="{now_page:(item.text == page)}"
+                        v-on:click="jumpTop(item.page)"
+                        >{{item.text}}</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content_right">
+
+            <!-- //标签云 -->
+            <div class="right_module" id="randomTags">
+                <div>随机标签云</div>
+                <a href="/" v-for="item in tags" 
+                v-bind:value="item.id"
+                :style="{color:randomColor(),fontSize:randomFontsize()}">{{item.tag}}</a>
+
+            </div>
+
+            <!-- 热门 -->
+            <div class="right_module" id="new_hot">
+                <div>最近热门</div>
+                <ul>
+                    <li v-for="item in titleList"><a v-bind:href="item.link">{{item.title}}</a></li>
+                </ul>
+            </div>
+
+            <!-- 评论 -->
+            <div class="right_module" id="new_comments">
+                <div>评论</div>
+                <ul>
+                    <li v-for="item in commentList">
+                        <div>
+                            <span>{{item.name}}</span>
+                            <span class="pull_right">{{item.date}}</span>
+                        </div>
+                        <p>{{item.comment}}</p>
+                    </li>
+
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="right_module">
+                <div>友情链接</div>
+                <div class="wrap">
+                    <span><a href="/">王ask的理解</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页尾 -->
+    <footer></footer>
+
+    <script src="./js/index.js"></script>
+    <script src="./js/base.js"></script>
+</body>
+
+</html>
